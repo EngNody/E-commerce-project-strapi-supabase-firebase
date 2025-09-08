@@ -10,35 +10,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ----------------------------
       # 1️⃣ Checkout الكود
+      # ----------------------------
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # ----------------------------
       # 2️⃣ إعداد Node.js
+      # ----------------------------
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # ----------------------------
       # 3️⃣ تثبيت تبعيات الفرونت اند
+      # ----------------------------
       - name: Install dependencies
         run: npm install --prefix frontend
 
+      # ----------------------------
       # 4️⃣ تعيين متغيرات Supabase من Secrets
+      # ----------------------------
       - name: Set frontend environment variables
         run: |
           echo "VITE_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> $GITHUB_ENV
           echo "VITE_SUPABASE_PROJECT_REF=${{ secrets.SUPABASE_PROJECT_REF }}" >> $GITHUB_ENV
           echo "VITE_SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> $GITHUB_ENV
 
-      # 5️⃣ بناء المشروع باستخدام Vite
+      # ----------------------------
+      # 5️⃣ Build المشروع باستخدام Vite
+      # ----------------------------
       - name: Build frontend
         run: npm run build --prefix frontend
 
-      # 6️⃣ نشر على GitHub Pages
-      - name: Deploy to GitHub Pages
+      # ----------------------------
+      # 6️⃣ نشر على GitHub Pages باستخدام PAT لتجنب exit code 128
+      # ----------------------------
+      - name: Deploy frontend to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PAT_TOKEN }}    # استخدمي PAT بدل GITHUB_TOKEN
           publish_dir: ./frontend/dist
+          publish_branch: gh-pages
+          force_orphan: true
