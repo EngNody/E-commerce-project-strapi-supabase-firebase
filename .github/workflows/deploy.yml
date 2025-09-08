@@ -15,7 +15,7 @@ jobs:
       # ----------------------------
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
 
       # ----------------------------
       # 2️⃣ إعداد Node.js
@@ -52,7 +52,7 @@ jobs:
       - name: Deploy frontend to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}    # استخدمي PAT بدل GITHUB_TOKEN
+          github_token: ${{ secrets.PAT_TOKEN }}    # استخدمي PAT بدل GITHUB_TOKEN
           publish_dir: ./frontend/dist
           publish_branch: gh-pages
           force_orphan: true
