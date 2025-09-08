@@ -1,46 +1,44 @@
-name: Deploy Frontend to GitHub Pages
+name: Build & Deploy Frontend with Supabase
 
 on:
   push:
     branches:
-      - main   # لو الفرع الأساسي اسمه main، لو master غيري الاسم
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
-    env:
-      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF || '' }}
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL || '' }}
-      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY || ''}}
-
     steps:
-      # 1. نسخ المشروع
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      # 1️⃣ Checkout الكود
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. إعداد Node.js
+      # 2️⃣ إعداد Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
-      # 3. تثبيت الحزم
+      # 3️⃣ تثبيت تبعيات الفرونت اند
       - name: Install dependencies
-        run: |
-          cd frontend
-          npm ci
+        run: npm install --prefix frontend
 
-      # 4. بناء المشروع
-      - name: Build project
+      # 4️⃣ تعيين متغيرات Supabase من Secrets
+      - name: Set frontend environment variables
         run: |
-          cd frontend
-          npm run build
+          echo "VITE_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> $GITHUB_ENV
+          echo "VITE_SUPABASE_PROJECT_REF=${{ secrets.SUPABASE_PROJECT_REF }}" >> $GITHUB_ENV
+          echo "VITE_SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> $GITHUB_ENV
 
-      # 5. نشر على GitHub Pages
+      # 5️⃣ بناء المشروع باستخدام Vite
+      - name: Build frontend
+        run: npm run build --prefix frontend
+
+      # 6️⃣ نشر على GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./frontend/dist
-
