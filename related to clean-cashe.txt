@@ -1,0 +1,27 @@
+افتحي Notepad → انسخي الكود ده → احفظي الملف باسم:
+
+clean-cache.bat
+
+
+في نفس الفولدر اللي فيه frontend و backend.
+
+دوبل كليك على الملف 👉 هيعمل:
+
+مسح .vite في frontend.
+
+مسح .cache + build + .strapi/vite في backend.
+
+هيطبعلك رسالة نجاح ✅.
+
+بعد ما يخلص:
+
+cd backend
+npm install
+npm run develop
+
+
+وفي نافذة تانية:
+
+cd frontend
+npm install
+npm run dev
