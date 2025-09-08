@@ -1,31 +1,45 @@
-name: Deploy to Supabase
+name: Deploy Frontend to GitHub Pages
 
 on:
   push:
     branches:
-      - main   # بيشتغل كل مرة تعملي push على فرع main
+      - main   # لو الفرع الأساسي اسمه main، لو master غيري الاسم
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
+    env:
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF || '' }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL || '' }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY || ''}}
+
     steps:
+      # 1. نسخ المشروع
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2. إعداد Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install Supabase CLI
-        run: npm install -g supabase
+      # 3. تثبيت الحزم
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
 
-      - name: Link Supabase project
-        run: supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+      # 4. بناء المشروع
+      - name: Build project
+        run: |
+          cd frontend
+          npm run build
 
-      - name: Deploy migrations and config
-        run: supabase db push
-
-      - name: Deploy functions
-        run: supabase functions deploy --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+      # 5. نشر على GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/build
