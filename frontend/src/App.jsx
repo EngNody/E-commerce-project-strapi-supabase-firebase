@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   const [theme, colorMode] = useMode();
+  
       // const theme = useTheme();
   
 
