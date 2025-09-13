@@ -42,17 +42,23 @@ const [selectimg, setselectimg] = useState(0);
             <Stack direction={"row"} gap={1} my={2} width={"300px"} sx={{justifyContent:{xs:"center",sm:"left"}}}>
 
              <ToggleButtonGroup
-      value={alignment}
+      value={selectimg}
       exclusive
       onChange={handleAlignment}
-     aria-label="left aligned"
-    >
+sx={{
+              ".Mui-selected ": {
+                border: "1px solid royalblue !important",
+                borderRadius:"5px !important",
+                opacity:"1",
+                backgroundColor: "initial",
+              },
+            }}    >
                 
                 {/* {["src/images/OIF.webp","src/images/OIP.webp"].map((item) => { */}
                 {item.productimg.map((item,index) => {
 
                   return(
-                      <ToggleButton key={item.id} value="left"  sx={{width:"110px",height:"110px",mx:5 ,p:"0",opacity:"0.5",margin:"5px !important"}}>
+                      <ToggleButton key={item.id} value={index}  sx={{width:"110px",height:"110px",mx:5 ,p:"0",opacity:"0.5",margin:"5px !important"}}>
 
 
                     <img  src={item.url} alt="" style={{borderRadius:3,width:"100%",height:"100%",objectFit:"cover",cursor:"pointer"}}  
