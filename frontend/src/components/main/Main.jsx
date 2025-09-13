@@ -6,6 +6,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -31,13 +32,15 @@ import "slick-carousel/slick/slick-theme.css";
 
 // import { Scale } from "@mui/icons-material";
 
+
 export default function main() {
   const [alignment, setAlignment] = React.useState("left");
 
   const handleAlignment = (event, newValue) => {
+     if (newValue !== null) {
     setAlignment(newValue);
     setmyDate(newValue)
-  };
+  }};
 
   const theme = useTheme();
 
@@ -52,12 +55,14 @@ export default function main() {
   };
 
 
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 
 const allProductsAPI = 'products?populate=*'
 const menCategoryAPI = 'products?populate=*&filters[category][$eq]=men'
 const womanCategoryAPI = 'products?populate=*&filters[category][$eq]=woman'
 
+const [clickedProduct, setclickedProduct] = useState({});
 
   const [myDate, setmyDate] = useState(allProductsAPI);
 
@@ -70,21 +75,54 @@ if(data){
 
 }
 
+ function GradientCircularProgress() {
+  return (
+    <React.Fragment>
+      <svg width={0} height={0}>
+        <defs>
+          <linearGradient id="my_gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#e01cd5" />
+            <stop offset="100%" stopColor="#1CB5E0" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <CircularProgress sx={{ 'svg circle': { stroke: 'url(#my_gradient)' } }} />
+    </React.Fragment>
+  );
+}
+
 if(isLoading){
+
   return(
-    <Typography variant="h6" textAlign={"center"} my={10}>
-      Loading...............
-    </Typography>
+    // <Typography variant="h6" textAlign={"center"} my={10}>
+    //   Loading...............
+    // </Typography>
+
+
+    <Container sx={{textAlign:"center", py:11}}>  
+  
+        <GradientCircularProgress />
+  
+</Container>
+
+
   )
 }
 
 if(error){
+        console.log(error)
   return(
-    <Typography variant="h6" textAlign={"center"} my={10}>
-       {error.
+
+ <Container sx={{textAlign:"center", marginTop:"50px",marginBottom:"50px",userSelect:"none"}}>
+     <Typography variant="h6" my={3}>
+  {error.
 // @ts-ignore
-       message}
-    </Typography>
+  error}
+     </Typography >
+     <Typography   variant="h6" > 
+       Please try again later
+     </Typography>
+ </Container>
   )
 }
 
@@ -193,7 +231,7 @@ if(data){
         // لو لينك محلي هيكون نسبي، فهنضيف http://localhost:1337
         const imageUrl = img.url.startsWith("http")
           ? img.url
-          : `http://localhost:1337${img.url}`;
+          : `${API_URL}${img.url}`;
 
 return(
 
@@ -242,7 +280,12 @@ return(
                   justifyContent: "space-between",
                 }}
               >
-                <Button size="large" variant="outlined" onClick={handleClickOpen}>
+                <Button size="large" variant="outlined" 
+                onClick={() => {
+                  handleClickOpen();
+                  setclickedProduct(item)
+                  console.log(item)
+                }}>
                   <AddShoppingCartIcon
                     fontSize="small"
                     sx={{ marginRight: 1 }}
@@ -287,14 +330,14 @@ return(
 
 
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {/* {"Use Google's location service?"} */}
         </DialogTitle>
         <DialogContent>
 
-          <ProductDetails/>
+          <ProductDetails clickedProduct={clickedProduct} item={clickedProduct}/>
 
           <DialogContentText id="alert-dialog-description">
-            Hello
+          
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -1,37 +1,75 @@
-import { Box, Button } from '@mui/material'
-import React from 'react'
+import { Box, Button, ToggleButton, ToggleButtonGroup } from '@mui/material'
+import React, { useState } from 'react'
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/material';
 import { AddShoppingCartOutlined } from '@mui/icons-material';
 
-export default function ProductDetails() {
+export default function ProductDetails({clickedProduct,item}) {
+  console.log(item)
+
+
+const [selectimg, setselectimg] = useState(0);
+
+  const [alignment, setAlignment] = React.useState('left');
+
+  const handleAlignment = (event, newAlignment) => {
+       if (newAlignment !== null) {
+
+    setAlignment(newAlignment);
+       }
+  }
+
   return (
     <div>
 
         <Box sx={{display:"flex",alignItems:"center",gap:2.5, flexDirection:{xs:"column",sm:"row"}}}>
 
         <Box display={"flex"}>
-            <img width={300} src="src\images\OIF.webp" alt="" />
+            {/* <img width={300} src="src\images\OIF.webp" alt="" /> */}
+            <img width={300} src={item.productimg[selectimg].url} alt="" />
         </Box>
 
 
-        <Box sx={{textAlign:{xs:"center",sm:"left"}}}>
-            <Typography variant='h5'>WOMEN'S FASHION</Typography>
+        <Box sx={{textAlign:{xs:"center",sm:"left", userSelect:"none"}}}>
+            <Typography variant='h5'>{clickedProduct.productTitle}</Typography>
 
-            <Typography my={0.4} fontSize={"22px"} color='crimson'>
-                $12.99
+            <Typography my={0.4} fontSize={"22px"} color='crimson' sx={{userSelect:"none"}}>
+                {clickedProduct.productPrice}
                 </Typography>
 
-            <Typography variant='body1'> kkkkkkkkkkkkkkkkkkkkkk</Typography>
+            <Typography variant='body1' sx={{userSelect:"none"}}> {item.productDescription}</Typography>
 
             <Stack direction={"row"} gap={1} my={2} width={"300px"} sx={{justifyContent:{xs:"center",sm:"left"}}}>
+
+             <ToggleButtonGroup
+      value={alignment}
+      exclusive
+      onChange={handleAlignment}
+     aria-label="left aligned"
+    >
                 
-                {["src/images/OIF.webp","src/images/OIP.webp"].map((item) => {
+                {/* {["src/images/OIF.webp","src/images/OIP.webp"].map((item) => { */}
+                {item.productimg.map((item,index) => {
+
                   return(
-                    <img key={item} src={item} alt="" width={"100px"} height={"90px"} style={{borderRadius:3}}/>
+                      <ToggleButton key={item.id} value="left"  sx={{width:"110px",height:"110px",mx:5 ,p:"0",opacity:"0.5",margin:"5px !important"}}>
+
+
+                    <img  src={item.url} alt="" style={{borderRadius:3,width:"100%",height:"100%",objectFit:"cover",cursor:"pointer"}}  
+                    onClick={() => {
+                      setselectimg(index)
+                    }
+                    }/>
+                  
+                    </ToggleButton>
+
+
                   )
-                }
-                )}
+                } )}
+                                 
+               </ToggleButtonGroup>
+
+              
 
             </Stack>
 

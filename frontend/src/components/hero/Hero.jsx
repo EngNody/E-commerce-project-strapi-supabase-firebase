@@ -17,8 +17,8 @@ import IconSection from "./IconSection";
 
 
 const myslider =[
-  {text:"Men", link:"src/images/banner-15.jpg"},
-  {text:"Woman", link:"src/images/banner-25.jpg"},
+  {text:"Men", link:"./images/banner-15.jpg"},
+  {text:"Woman", link:"./images/banner-25.jpg"},
 ]
 
 
@@ -140,7 +140,7 @@ export default function Hero() {
           <img
             width={"100%"}
             height={"50%"}
-            src="src\images\banner-17.jpg"
+            src=".\images\banner-17.jpg"
             alt=""
           />
 
@@ -205,7 +205,7 @@ export default function Hero() {
           <img
             width={"100%"}
             height={"50%"}
-            src="src\images\banner-16.jpg"
+            src=".\images\banner-16.jpg"
             alt=""
           />
 

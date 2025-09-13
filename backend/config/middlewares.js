@@ -21,7 +21,15 @@ module.exports = [
       },
     },
   },
-  'strapi::cors',
+  {
+  name: 'strapi::cors',
+  config: {
+    origin: ['*'], // أو تحطي رابط موقعك بعد النشر مثلاً https://myshop.vercel.app
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  },
+},
+
+  // 'strapi::cors',
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',
