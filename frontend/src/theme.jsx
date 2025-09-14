@@ -11,6 +11,7 @@ export const getDesignTokens = (mode) => ({
           // palette values for light mode
           text: {
             primary: "#2B3445",
+
           },
           neutral: {
             main: "#64748B",

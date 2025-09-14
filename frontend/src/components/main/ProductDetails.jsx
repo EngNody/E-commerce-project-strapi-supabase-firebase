@@ -22,11 +22,15 @@ const [selectimg, setselectimg] = useState(0);
   return (
     <div>
 
-        <Box sx={{display:"flex",alignItems:"center",gap:2.5, flexDirection:{xs:"column",sm:"row"}}}>
+        <Box sx={{display:"flex",alignItems:"center", width:"360",gap:2.5, flexDirection:{xs:"column",sm:"row"}}}>
 
         <Box display={"flex"}>
+
+
+
+          
             {/* <img width={300} src="src\images\OIF.webp" alt="" /> */}
-            <img width={300} src={item.productimg[selectimg].url} alt="" />
+            <img width={360} src={item.productimg[selectimg].url} alt="" />
         </Box>
 
 

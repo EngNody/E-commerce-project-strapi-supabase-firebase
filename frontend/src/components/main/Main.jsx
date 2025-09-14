@@ -29,6 +29,7 @@ import { useGetProductByNameQuery } from "../../Redux/Product";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import { AnimatePresence, motion } from "motion/react"
 
 // import { Scale } from "@mui/icons-material";
 
@@ -195,6 +196,9 @@ if(data){
         justifyContent={"space-around"}
       >
    
+
+           <AnimatePresence>
+
         {data.data.map((item) => {
 
 
@@ -215,6 +219,9 @@ if(data){
           return (
             
             <Card
+            component={motion.div}
+            layout className="popular-movies"
+            transition={{duration:1,type: "spring", stiffness: 100}}
               key={item.id}
               sx={{
                 maxWidth: 333,
@@ -304,7 +311,10 @@ return(
             </Card>
           );
         })}
-           
+                   </AnimatePresence>
+
+
+
       </Stack>
 
  <Dialog

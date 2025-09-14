@@ -12,7 +12,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
-
 function App() {
   const [theme, colorMode] = useMode();
   
@@ -29,6 +28,15 @@ function App() {
       theme={theme}>
                 <CssBaseline />
 
+ {/* <motion.div animate={{ scale: 1.5 }}  */}
+ {/* <motion.h1
+ initial={{ scale: 0.5 ,color:"blue[300]"}}
+  animate={{ scale: 1,color:"red"}} 
+  transition={{ duration: 5}}>
+  Hend
+  </motion.h1> */}
+
+  
     <Header1/>
     <Header2/>
     <Header3/>

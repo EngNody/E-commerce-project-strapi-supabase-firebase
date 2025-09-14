@@ -15,7 +15,7 @@ export default function Links({ title }) {
 
 <Box   className="show-when-hover"
  sx={{position:"absolute",top:"100%",left:"50%",transform:"translateX(-50%)",
-    width:"100%",zIndex:1,minWidth:"170px",display:"none"
+    width:"100%",zIndex:5,minWidth:"170px",display:"none"
   }}
 >
   <Paper
@@ -23,7 +23,7 @@ export default function Links({ title }) {
      elevation={3}>
   
       <nav aria-label="secondary mailbox folders">
-            <List>
+            <List >
               <ListItem disablePadding>
                 <ListItemButton sx={{display:"flex",p:0,px:1.5}}>
                   <ListItemText sx={{".MuiTypography-root":{fontSize:"15px",fontWeight:"300"}}} primary="Dashboard" />
